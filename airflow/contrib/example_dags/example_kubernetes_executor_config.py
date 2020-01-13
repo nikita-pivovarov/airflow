@@ -21,18 +21,20 @@ This is an example dag for using a Kubernetes Executor Configuration.
 """
 import os
 
+import airflow
 from airflow.contrib.example_dags.libs.helper import print_stuff
 from airflow.models import DAG
 from airflow.operators.python_operator import PythonOperator
-from airflow.utils.dates import days_ago
 
 default_args = {
     'owner': 'airflow',
-    'start_date': days_ago(2)
+    'start_date': airflow.utils.dates.days_ago(2),
+    'fs_group': 2000,
+    'run_as_user': 1000
 }
 
 with DAG(
-    dag_id='example_kubernetes_executor_config',
+    dag_id='example_kubernetes_executor_config4',
     default_args=default_args,
     schedule_interval=None
 ) as dag:
@@ -54,7 +56,27 @@ with DAG(
         python_callable=print_stuff,
         executor_config={
             "KubernetesExecutor": {
-                "annotations": {"test": "annotation"}
+                "volumes": [
+                    {
+                        "name": "example-kubernetes-test-volume",
+                        "emptyDir": {},
+                    },
+                    {
+                        "name": "git-volume",
+                        "emptyDir": {},
+                    }
+                ],
+                "volume_mounts": [
+                    {
+                        "mountPath": "/usr/local/airflow/",
+                        "name": "example-kubernetes-test-volume",
+                    },
+                    {
+                        "mountPath": "/tmp/",
+                        "name": "git-volume",
+                    }
+
+                ]
             }
         }
     )
@@ -68,14 +90,23 @@ with DAG(
                 "volumes": [
                     {
                         "name": "example-kubernetes-test-volume",
-                        "hostPath": {"path": "/tmp/"},
+                        "emptyDir": {},
                     },
+                    {
+                        "name": "git-volume",
+                        "emptyDir": {},
+                    }
                 ],
                 "volume_mounts": [
                     {
-                        "mountPath": "/foo/",
+                        "mountPath": "/usr/local/airflow/",
                         "name": "example-kubernetes-test-volume",
                     },
+                    {
+                        "mountPath": "/tmp/",
+                        "name": "git-volume",
+                    }
+
                 ]
             }
         }
@@ -87,9 +118,27 @@ with DAG(
         python_callable=print_stuff,
         executor_config={
             "KubernetesExecutor": {
-                "securityContext": {
-                    "runAsUser": 1000
-                }
+                "volumes": [
+                    {
+                        "name": "example-kubernetes-test-volume",
+                        "emptyDir": {},
+                    },
+                    {
+                        "name": "git-volume",
+                        "emptyDir": {},
+                    }
+                ],
+                "volume_mounts": [
+                    {
+                        "mountPath": "/usr/local/airflow/",
+                        "name": "example-kubernetes-test-volume",
+                    },
+                    {
+                        "mountPath": "/tmp/",
+                        "name": "git-volume",
+                    }
+
+                ]
             }
         }
     )
