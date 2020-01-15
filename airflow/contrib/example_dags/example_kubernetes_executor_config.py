@@ -60,20 +60,12 @@ with DAG(
                     {
                         "name": "example-kubernetes-test-volume",
                         "emptyDir": {},
-                    },
-                    {
-                        "name": "git-volume",
-                        "emptyDir": {},
                     }
                 ],
                 "volume_mounts": [
                     {
-                        "mountPath": "/usr/local/airflow/",
+                        "mountPath": "/usr/local/airflow",
                         "name": "example-kubernetes-test-volume",
-                    },
-                    {
-                        "mountPath": "/tmp/",
-                        "name": "git-volume",
                     }
 
                 ]
@@ -91,20 +83,12 @@ with DAG(
                     {
                         "name": "example-kubernetes-test-volume",
                         "emptyDir": {},
-                    },
-                    {
-                        "name": "git-volume",
-                        "emptyDir": {},
                     }
                 ],
                 "volume_mounts": [
                     {
-                        "mountPath": "/usr/local/airflow/",
+                        "mountPath": "/usr/local/airflow",
                         "name": "example-kubernetes-test-volume",
-                    },
-                    {
-                        "mountPath": "/tmp/",
-                        "name": "git-volume",
                     }
 
                 ]
@@ -122,20 +106,12 @@ with DAG(
                     {
                         "name": "example-kubernetes-test-volume",
                         "emptyDir": {},
-                    },
-                    {
-                        "name": "git-volume",
-                        "emptyDir": {},
                     }
                 ],
                 "volume_mounts": [
                     {
-                        "mountPath": "/usr/local/airflow/",
+                        "mountPath": "/usr/local/airflow",
                         "name": "example-kubernetes-test-volume",
-                    },
-                    {
-                        "mountPath": "/tmp/",
-                        "name": "git-volume",
                     }
 
                 ]
